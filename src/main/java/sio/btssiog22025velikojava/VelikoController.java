@@ -1,14 +1,21 @@
 package sio.btssiog22025velikojava;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.fxml.Initializable;
+import javafx.scene.web.WebView;
 
-public class VelikoController {
-    @FXML
-    private Label welcomeText;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class VelikoController implements Initializable {
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    private WebView wvVeliko;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        wvVeliko.getEngine().load("https://openstreetmap.org/");
+        //wvVeliko.getEngine().load("https://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png");
     }
 }

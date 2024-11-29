@@ -10,13 +10,13 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import sio.btssiog22025velikojava.controllers.StationController;
+import sio.btssiog22025velikojava.models.Station;
 import sio.btssiog22025velikojava.tools.DataSourceProvider;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
-
-import static java.sql.DriverManager.println;
 
 public class VelikoController implements Initializable {
 
@@ -56,7 +56,7 @@ public class VelikoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        appGestionDesUtilisateurs.toFront();
+        appGestionParc.toFront();
         try {
             provider = new DataSourceProvider();
         } catch (ClassNotFoundException | SQLException e) {
@@ -64,23 +64,55 @@ public class VelikoController implements Initializable {
         }
 
         stationController = new StationController();
+        List<Station> stations;
         try {
-            stationController.allStation().forEach(station -> {
-                System.out.println(station.getStation_id() + " " + station.getName());
-            });
+            stations = stationController.allStation();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-        // Charger la carte
+        // Load the map
         WebEngine webEngine = wvVeliko.getEngine();
         URL mapUrl = getClass().getResource("/html/map.html");
 
         if (mapUrl != null) {
+            //Charger la map
             webEngine.load(mapUrl.toExternalForm());
+
+            webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
+                if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
+
+                    //Renvoyer liste des stations
+                    webEngine.executeScript("window.stations = " + convertStationsToJson(stations) + ";");
+
+                    //Lancer la fonction loadStations()
+                    webEngine.executeScript("loadStations();");
+                }
+            });
         } else {
             System.err.println("Carte introuvable.");
         }
+
+    }
+
+    // convert list of stations to json
+    private String convertStationsToJson(List<Station> stations) {
+        StringBuilder json = new StringBuilder("[");
+        for (Station station : stations) {
+            json.append("{")
+                    .append("\"name\":\"").append(station.getName()).append("\",")
+                    .append("\"lat\":").append(station.getLat()).append(",")
+                    .append("\"lon\":").append(station.getLon()).append(",")
+                    .append("\"capacity\":").append(station.getCapacity()).append(",")
+                    .append("\"mechanical_bikes\":").append(station.getNum_mechanical_bikes_available()).append(",")
+                    .append("\"electric_bikes\":").append(station.getNum_electric_bikes_available())
+                    .append("},");
+        }
+        if (json.length() > 1) {
+            json.setLength(json.length() - 1); // Remove the last comma
+        }
+        json.append("]");
+        return json.toString();
     }
 
     @FXML

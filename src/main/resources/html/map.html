@@ -5,7 +5,10 @@
     <title>Carte Veliko</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
     <style>
         #map {
             width: 100%;
@@ -26,15 +29,58 @@
         zoomOffset: 0
     }).addTo(map);
 
-    const stations = [
-        { name: "Station 1", lat: 48.857, lon: 2.352, bikes: 5 },
-        { name: "Station 2", lat: 48.856, lon: 2.360, bikes: 3 }
-    ];
-    stations.forEach(station => {
-        L.marker([station.lat, station.lon])
-            .addTo(map)
-            .bindPopup(`<b>${station.name}</b><br>${station.bikes} vélos disponibles.`);
-    });
+    // Initialize user geolocation
+    /*if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var userLat = position.coords.latitude;
+            var userLon = position.coords.longitude;
+
+            map.setView([userLat, userLon], 14);
+
+            L.marker([userLat, userLon], {
+                icon: L.icon({
+                    iconUrl: '/images/redping.png',
+                    iconSize: [25, 40],
+                    iconAnchor: [16, 32],
+                    popupAnchor: [-4, -32]
+                })
+            }).addTo(map)
+                .bindPopup("You are here")
+                .openPopup();
+
+        }, function(error) {
+            console.error('Geolocation error: ' + error.message);
+        });
+    } else {
+        console.error("Geolocation is not supported by this browser.");
+    }*/
+
+    function loadStations() {
+        var markers = L.markerClusterGroup();
+        if (window.stations) {
+            window.stations.forEach(station => {
+                var marker = L.marker([station.lat, station.lon]);
+
+                // popup Station
+                marker.on('mouseover', function() {
+                    marker.bindPopup(
+                        "<b>Name:</b> " + station.name +
+                        "<br><b>Capacity:</b> " + station.capacity +
+                        "<br><b>Mechanical Bikes:</b> " + station.mechanical_bikes +
+                        "<br><b>Electric Bikes:</b> " + station.electric_bikes
+                    ).openPopup();
+                });
+
+                markers.addLayer(marker);
+            });
+        } else {
+            console.error("Stations data is not available.");
+        }
+
+        map.addLayer(markers);
+    }
+
+    window.onload = loadStations;
 </script>
 </body>
 </html>

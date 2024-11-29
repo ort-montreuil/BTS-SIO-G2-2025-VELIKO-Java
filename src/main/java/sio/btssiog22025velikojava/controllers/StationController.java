@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class StationController {
 
-    private StationService stationService;
+    private final StationService stationService;
 
     public StationController() {
         this.stationService = new StationService();

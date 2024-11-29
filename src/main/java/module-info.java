@@ -4,8 +4,9 @@ module sio.btssiog22025velikojava {
     requires javafx.web;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
-    requires jdk.jdi;
+    requires java.desktop;
     requires java.sql;
+    requires jdk.jdi;
 
 
     opens sio.btssiog22025velikojava to javafx.fxml;

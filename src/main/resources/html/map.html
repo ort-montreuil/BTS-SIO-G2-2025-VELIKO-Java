@@ -64,17 +64,23 @@
                 // popup Station
                 marker.on('mouseover', function() {
                     marker.bindPopup(
-                        "<b>Name:</b> " + station.name +
-                        "<br><b>Capacity:</b> " + station.capacity +
-                        "<br><b>Mechanical Bikes:</b> " + station.mechanical_bikes +
-                        "<br><b>Electric Bikes:</b> " + station.electric_bikes
-                    ).openPopup();
+                        `<div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px; color: #333;">${station.name}</div>
+                         <div><b>Capacité totale :</b> ${station.capacity}</div>
+                         <div>
+                             <img src="../Images/icone-velonoir.png" alt="icone vélo mécanique" width="25" style="vertical-align: middle; margin-right: 5px;">
+                             <b>Vélos mécaniques :</b> ${station.mechanical_bikes}
+                         </div>
+                         <div>
+                             <img src="../Images/icone-Evelo.png" alt="icone vélo électrique" width="25" style="vertical-align: middle; margin-right: 5px;">
+                             <b>Vélos électriques :</b> ${station.electric_bikes}
+                         </div>`
+                ).openPopup();
                 });
 
                 markers.addLayer(marker);
             });
         } else {
-            console.error("Stations data is not available.");
+            console.error("Stations data is not  available.");
         }
 
         map.addLayer(markers);

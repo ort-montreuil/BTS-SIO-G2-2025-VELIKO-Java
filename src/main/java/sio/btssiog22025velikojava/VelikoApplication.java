@@ -10,7 +10,7 @@ import java.io.IOException;
 public class VelikoApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(VelikoApplication.class.getResource("veliko-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(VelikoApplication.class.getResource("connexion.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
         stage.show();

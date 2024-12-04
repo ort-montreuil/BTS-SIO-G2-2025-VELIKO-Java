@@ -7,6 +7,7 @@ module sio.btssiog22025velikojava {
     requires java.desktop;
     requires java.sql;
     requires jdk.jdi;
+    requires spring.security.crypto;
 
 
     opens sio.btssiog22025velikojava to javafx.fxml;

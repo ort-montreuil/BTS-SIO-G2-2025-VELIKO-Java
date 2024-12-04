@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.VelikoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.VelikoController">
    <children>
       <BorderPane layoutY="-1.0" prefHeight="487.0" prefWidth="760.0">
          <top>
@@ -83,22 +83,23 @@
                <children>
                   <AnchorPane fx:id="appGestionDesUtilisateurs" prefHeight="387.0" prefWidth="519.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView fx:id="tvUtilisateurs" layoutX="75.0" layoutY="58.0" prefHeight="200.0" prefWidth="225.0">
+                        <TableView fx:id="tvUtilisateurs" layoutX="75.0" layoutY="59.0" prefHeight="200.0" prefWidth="302.0">
                           <columns>
                             <TableColumn fx:id="tcNom" prefWidth="75.0" text="Nom" />
-                            <TableColumn fx:id="tcEmail" prefWidth="75.0" text="Email" />
-                              <TableColumn fx:id="tcStatut" prefWidth="75.0" text="Statut" />
+                            <TableColumn fx:id="tcEmail" prefWidth="75.0" text="Prénom" />
+                              <TableColumn fx:id="tcStatut" prefWidth="75.0" text="Email" />
+                              <TableColumn prefWidth="75.0" text="Statut" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnSupprimer" layoutX="337.0" layoutY="58.0" mnemonicParsing="false" text="Supprimer">
+                        <Button fx:id="btnSupprimer" layoutX="413.0" layoutY="59.0" mnemonicParsing="false" text="Supprimer">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="285.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="240.0" text="Forcer un changement de mot de passe">
+                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="240.0" text="Forcer un changement de mot de passe">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnBlocage" layoutX="75.0" layoutY="327.0" mnemonicParsing="false" text="Bloquer/Débloquer l'utilisateur sélectionné">
+                        <Button fx:id="btnBlocage" layoutX="75.0" layoutY="335.0" mnemonicParsing="false" text="Bloquer/Débloquer l'utilisateur sélectionné">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>

@@ -30,4 +30,8 @@ public class UserController
     {
         userService.unblockUser(email);
     }
+    public void deleteUser(String email) throws SQLException
+    {
+        userService.deleteUser(email);
+    }
 }

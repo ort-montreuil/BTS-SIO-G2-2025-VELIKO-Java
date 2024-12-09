@@ -67,5 +67,52 @@ public class UserRepository
         ps.executeUpdate();
         ps.close();
     }
+    public void deleteUser(String email) throws SQLException
+    {
+        // Récupérer l'id de l'utilisateur à partir de son email
+        PreparedStatement ps = connection.prepareStatement("SELECT id FROM `user` WHERE email = ?");
+        ps.setString(1, email);
+        ResultSet rs = ps.executeQuery();
+
+        int userId = 0;
+        if (rs.next()) {
+
+            userId = rs.getInt("id");
+        }
+        else {
+            throw new SQLException("User not found");
+        }
+        rs.close();
+        ps.close();
+
+        // Anonymize the user
+        ps = connection.prepareStatement(
+            " UPDATE `user` SET name = 'Anonyme', first_name = 'Anonyme',roles = '[\"ROLE_BLOCKED\"]' ,address='Anonymisée',email = CONCAT('anonyme_', id, '@example.com'), password = ? WHERE email = ?");
+        ps.setString(1, PasswordHasher.hashPassword("anonyme"));
+        ps.setString(2, email);
+        ps.executeUpdate();
+        ps.close();
+
+        // Delete future reservations
+        ps = connection.prepareStatement("DELETE FROM `reservation` WHERE user_email = ? AND date_reservation > NOW()");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+
+        //Anonymize the user in the past reservations
+        ps = connection.prepareStatement("UPDATE `reservation` SET user_email = CONCAT('anonyme_',?, '@example.com') WHERE user_email = ?");
+        ps.setInt(1, userId);
+        ps.setString(2, email);
+        ps.executeUpdate();
+        ps.close();
+
+        //Anonymize the user in the past fovorites
+        ps = connection.prepareStatement("UPDATE `station_fav` SET user_email = CONCAT('anonyme_',?, '@example.com') WHERE user_email = ?");
+        ps.setInt(1, userId);
+        ps.setString(2, email);
+        ps.executeUpdate();
+        ps.close();
+
+    }
 
 }

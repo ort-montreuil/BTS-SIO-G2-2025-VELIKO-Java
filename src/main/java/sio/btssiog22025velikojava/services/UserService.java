@@ -28,4 +28,8 @@ public class UserService
     {
         userRepository.unblockUser(email);
     }
+    public void deleteUser(String email) throws SQLException
+    {
+        userRepository.deleteUser(email);
+    }
 }

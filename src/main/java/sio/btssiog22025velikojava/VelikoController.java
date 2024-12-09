@@ -108,13 +108,6 @@ public class VelikoController implements Initializable {
         tcPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         tcStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
-        try {
-            tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
-
     }
 
     // convert list of stations to json
@@ -140,6 +133,11 @@ public class VelikoController implements Initializable {
     @FXML
     public void menuClicked(javafx.event.ActionEvent actionEvent) throws SQLException {
         if (actionEvent.getSource() == menuGestionUtilisateurs) {
+            try {
+                tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             appGestionDesUtilisateurs.toFront();
         } else if (actionEvent.getSource() == menuGestionParc) {
             appGestionParc.toFront();
@@ -152,12 +150,7 @@ public class VelikoController implements Initializable {
 
     @FXML
     public void deleteClicked(Event event) {
-    }
-
-    @FXML
-    public void blockClicked(Event event) {
-
-        //verifier si un utilisateur est selectionné
+        //Verifier si un utilisateur est selectionné
         if(tvUtilisateurs.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -167,7 +160,30 @@ public class VelikoController implements Initializable {
         else {
             User user = (User) tvUtilisateurs.getSelectionModel().getSelectedItem();
 
-            //bloquer ou débloquer l'utilisateur
+            //Supprimer l'utilisateur
+            try {
+                userController.deleteUser(user.getEmail());
+                tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    @FXML
+    public void blockClicked(Event event) {
+
+        //Verifier si un utilisateur est selectionné
+        if(tvUtilisateurs.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un utilisateur.");
+        }
+        else {
+            User user = (User) tvUtilisateurs.getSelectionModel().getSelectedItem();
+
+            //Bloquer ou débloquer l'utilisateur
             if (!user.getStatut()) {
                 try {
                     userController.blockUser(user.getEmail());

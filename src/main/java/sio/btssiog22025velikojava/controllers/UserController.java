@@ -21,4 +21,13 @@ public class UserController
     {
         return userService.checkCredentials(email, enteredPassword);
     }
+
+    public void blockUser(String email) throws SQLException
+    {
+        userService.blockUser(email);
+    }
+    public void unblockUser(String email) throws SQLException
+    {
+        userService.unblockUser(email);
+    }
 }

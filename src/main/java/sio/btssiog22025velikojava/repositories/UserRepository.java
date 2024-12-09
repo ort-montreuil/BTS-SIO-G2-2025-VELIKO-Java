@@ -22,7 +22,7 @@ public class UserRepository
     {
         ArrayList<User> lesUsers = new ArrayList<>();
         PreparedStatement ps = this.connection.prepareStatement("SELECT name, first_name, email, statut\n" +
-                "FROM `user` WHERE user.roles != '[\"ROLE_ADMIN\"]'");
+                "FROM `user` WHERE user.roles = '[\"ROLE_USER\"]'");
         ResultSet rs = ps.executeQuery();
 
         while (rs.next())
@@ -53,4 +53,19 @@ public class UserRepository
         rs.close();
         return result;
     }
+    public void blockUser(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("UPDATE `user` SET statut = 1 WHERE email = ?");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+    }
+    public void unblockUser(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("UPDATE `user` SET statut = 0 WHERE email = ?");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+    }
+
 }

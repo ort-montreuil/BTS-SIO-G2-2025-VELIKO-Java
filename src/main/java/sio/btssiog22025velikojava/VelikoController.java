@@ -1,20 +1,23 @@
 package sio.btssiog22025velikojava;
 
+import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import sio.btssiog22025velikojava.controllers.StationController;
+import sio.btssiog22025velikojava.controllers.UserController;
 import sio.btssiog22025velikojava.models.Station;
+import sio.btssiog22025velikojava.models.User;
 import sio.btssiog22025velikojava.tools.DataSourceProvider;
 
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -22,6 +25,7 @@ public class VelikoController implements Initializable {
 
     DataSourceProvider provider;
     StationController stationController;
+    UserController userController;
 
     @FXML
     private WebView wvVeliko;
@@ -53,6 +57,8 @@ public class VelikoController implements Initializable {
     private Button menuGestionParc;
     @FXML
     private Button menuTableauDeBord;
+    @FXML
+    private TableColumn tcPrenom;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,9 +70,12 @@ public class VelikoController implements Initializable {
         }
 
         stationController = new StationController();
+        userController = new UserController();
+        ArrayList<User> lesUser = new ArrayList<>();
         List<Station> stations;
         try {
             stations = stationController.allStation();
+            lesUser = userController.allUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -92,6 +101,19 @@ public class VelikoController implements Initializable {
         } else {
             System.err.println("Carte introuvable.");
         }
+
+        // Load the users
+        tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tcNom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        tcPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        tcStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
+
+        try {
+            tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
@@ -123,6 +145,45 @@ public class VelikoController implements Initializable {
             appGestionParc.toFront();
         } else if (actionEvent.getSource() == menuTableauDeBord) {
             appTableauDeBord.toFront();
+        }
+
+    }
+
+
+    @FXML
+    public void deleteClicked(Event event) {
+    }
+
+    @FXML
+    public void blockClicked(Event event) {
+
+        //verifier si un utilisateur est selectionné
+        if(tvUtilisateurs.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText(null);
+            alert.setContentText("Veuillez sélectionner un utilisateur.");
+        }
+        else {
+            User user = (User) tvUtilisateurs.getSelectionModel().getSelectedItem();
+
+            //bloquer ou débloquer l'utilisateur
+            if (!user.getStatut()) {
+                try {
+                    userController.blockUser(user.getEmail());
+                    tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            else {
+                try {
+                    userController.unblockUser(user.getEmail());
+                    tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 }

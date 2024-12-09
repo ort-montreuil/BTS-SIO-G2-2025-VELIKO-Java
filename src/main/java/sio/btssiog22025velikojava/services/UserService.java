@@ -20,4 +20,12 @@ public class UserService
     {
         return userRepository.checkCredentials(email, enteredPassword);
     }
+    public void blockUser(String email) throws SQLException
+    {
+        userRepository.blockUser(email);
+    }
+    public void unblockUser(String email) throws SQLException
+    {
+        userRepository.unblockUser(email);
+    }
 }

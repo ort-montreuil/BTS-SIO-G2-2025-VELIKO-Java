@@ -115,4 +115,33 @@ public class UserRepository
 
     }
 
+
+    public boolean ChangePassword (User user) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("SELECT must_change_password FROM User where email = ? ");
+        ps.setString(1, user.getEmail());
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        return rs.getBoolean("must_change_password");
+    }
+
+    public void forceUser(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("UPDATE user \n " +
+                "SET must_change_password = 1 \n" +
+                " WHERE user.email = ?");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public void unForceUser(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("UPDATE user \n " +
+                "SET must_change_password = 0 \n" +
+                " WHERE user.email = ?");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+    }
 }

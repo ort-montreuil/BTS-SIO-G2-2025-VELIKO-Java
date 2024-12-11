@@ -95,7 +95,7 @@
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="240.0" text="Forcer un changement de mot de passe">
+                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#btnChangementDeMotDePasseClicked" prefHeight="23.0" prefWidth="240.0" text="Forcer un changement de mot de passe">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
@@ -105,9 +105,9 @@
                            </font></Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appGestionParc" prefHeight="386.0" prefWidth="520.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="appGestionParc" prefHeight="390.0" prefWidth="522.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <WebView fx:id="wvVeliko" prefHeight="387.0" prefWidth="520.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <WebView fx:id="wvVeliko" layoutX="-0.8" prefHeight="390.0" prefWidth="523.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="appTableauDeBord" prefHeight="389.0" prefWidth="520.0" style="-fx-background-color: white;" />

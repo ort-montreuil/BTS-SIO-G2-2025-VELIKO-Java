@@ -32,4 +32,19 @@ public class UserService
     {
         userRepository.deleteUser(email);
     }
+
+    public boolean ChangePassword (User user) throws SQLException
+    {
+        return userRepository.ChangePassword(user);
+    }
+
+    public void forceUser(String email) throws SQLException
+    {
+        userRepository.forceUser(email);
+    }
+
+    public void unForceUser(String email) throws SQLException
+    {
+        userRepository.unForceUser(email);
+    }
 }

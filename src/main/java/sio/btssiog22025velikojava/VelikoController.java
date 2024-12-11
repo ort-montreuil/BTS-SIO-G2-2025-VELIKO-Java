@@ -62,7 +62,7 @@ public class VelikoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        appGestionParc.toFront();
+        appGestionDesUtilisateurs.toFront();
         try {
             provider = new DataSourceProvider();
         } catch (ClassNotFoundException | SQLException e) {
@@ -108,6 +108,12 @@ public class VelikoController implements Initializable {
         tcPrenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         tcStatut.setCellValueFactory(new PropertyValueFactory<>("statut"));
 
+        try {
+            tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     // convert list of stations to json
@@ -144,9 +150,7 @@ public class VelikoController implements Initializable {
         } else if (actionEvent.getSource() == menuTableauDeBord) {
             appTableauDeBord.toFront();
         }
-
     }
-
 
     @FXML
     public void deleteClicked(Event event) {
@@ -200,6 +204,18 @@ public class VelikoController implements Initializable {
                     throw new RuntimeException(e);
                 }
             }
+        }
+    }
+
+    public void btnChangementDeMotDePasseClicked(javafx.scene.input.MouseEvent mouseEvent) throws SQLException {
+        User user = (User) tvUtilisateurs.getSelectionModel().getSelectedItem();
+        if (userController.ChangePassword(user))
+        {
+            userController.unForceUser(user.getEmail());
+        }
+        else
+        {
+            userController.forceUser(user.getEmail());
         }
     }
 }

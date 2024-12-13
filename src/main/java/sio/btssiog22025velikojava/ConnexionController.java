@@ -43,9 +43,17 @@ public class ConnexionController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText(null);
-            alert.setContentText("Impossible d'initialiser la connexion à la base de données : ");
+            alert.setContentText("Impossible d'initialiser la connexion à la base de données : Vérifier la mise en marche du serveur de base de données et de veliko web.");
             alert.showAndWait();
         }
+
+
+
+    /*    try {
+            cnx = new DataSourceProvider();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }*/
     }
 
     @FXML

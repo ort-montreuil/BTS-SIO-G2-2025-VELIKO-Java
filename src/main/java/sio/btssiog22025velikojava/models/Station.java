@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Station {
 
-    private String station_id;
+    private long station_id;
     private String name;
     private String capacity;
     private double lat;
@@ -14,7 +14,7 @@ public class Station {
     private int num_electric_bikes_available;
     private Date last_upate_date;
 
-    public Station(String station_id, String name, String capacity, double lat, double lon, int num_mechanical_bikes_available, int num_electric_bikes_available, Date last_upate_date) {
+    public Station(long station_id, String name, String capacity, double lat, double lon, int num_mechanical_bikes_available, int num_electric_bikes_available, Date last_upate_date) {
         this.station_id = station_id;
         this.name = name;
         this.capacity = capacity;
@@ -25,11 +25,11 @@ public class Station {
         this.last_upate_date = last_upate_date;
     }
 
-    public String getStation_id() {
+    public float getStation_id() {
         return station_id;
     }
 
-    public void setStation_id(String station_id) {
+    public void setStation_id(long station_id) {
         this.station_id = station_id;
     }
 

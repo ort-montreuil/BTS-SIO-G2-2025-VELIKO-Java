@@ -29,32 +29,6 @@
         zoomOffset: 0
     }).addTo(map);
 
-    // Initialize user geolocation
-    /*if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-            var userLat = position.coords.latitude;
-            var userLon = position.coords.longitude;
-
-            map.setView([userLat, userLon], 14);
-
-            L.marker([userLat, userLon], {
-                icon: L.icon({
-                    iconUrl: '/images/redping.png',
-                    iconSize: [25, 40],
-                    iconAnchor: [16, 32],
-                    popupAnchor: [-4, -32]
-                })
-            }).addTo(map)
-                .bindPopup("You are here")
-                .openPopup();
-
-        }, function(error) {
-            console.error('Geolocation error: ' + error.message);
-        });
-    } else {
-        console.error("Geolocation is not supported by this browser.");
-    }*/
-
     function loadStations() {
         var markers = L.markerClusterGroup();
         if (window.stations) {
@@ -66,6 +40,7 @@
                     marker.bindPopup(
                         `<div style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px; color: #333;">${station.name}</div>
                          <div><b>Capacité totale :</b> ${station.capacity}</div>
+                         <div><b>Ajoutée aux favoris par</b>  ${station.favCount} <b>personnes</b></div>
                          <div>
                              <img src="../Images/icone-velonoir.png" alt="icone vélo mécanique" width="35" style="vertical-align: middle; margin-right: 5px;">
                              <b>Vélos mécaniques :</b> ${station.mechanical_bikes}
@@ -74,6 +49,7 @@
                              <img src="../Images/icone-Evelo.png" alt="icone vélo électrique" width="40" style="vertical-align: middle; margin-right: 5px;">
                              <b>Vélos électriques :</b> ${station.electric_bikes}
                          </div>`
+
                 ).openPopup();
                 });
 

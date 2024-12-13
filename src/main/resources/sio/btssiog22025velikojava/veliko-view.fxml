@@ -39,13 +39,14 @@
                         <Font name="Times New Roman" size="16.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../Images/1077114.png" />
-                           </image></ImageView>
+                           </image>
+                        </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="menuGestionParc" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: #bbbbbb;" text="Gestion du parc de vélos">
+                  <Button fx:id="menuGestionParc" graphicTextGap="15.0" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: #bbbbbb;" text="Gestion du parc de vélos">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -53,10 +54,11 @@
                         <Font name="Times New Roman" size="16.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="31.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../Images/360_F_114682103_yKYc7ovvDrmf3jOphGSPj6S74F7U4Ans.jpg" />
-                           </image></ImageView>
+                              <Image url="@../../Images/icone-velo-noir-homme.png" />
+                           </image>
+                        </ImageView>
                      </graphic>
                   </Button>
                   <Button fx:id="menuTableauDeBord" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: #bbbbbb;" text="Tableau de bord">

@@ -10,8 +10,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import sio.btssiog22025velikojava.controllers.StationController;
+import sio.btssiog22025velikojava.controllers.StationFavController;
 import sio.btssiog22025velikojava.controllers.UserController;
 import sio.btssiog22025velikojava.models.Station;
+import sio.btssiog22025velikojava.models.StationFav;
 import sio.btssiog22025velikojava.models.User;
 import sio.btssiog22025velikojava.tools.DataSourceProvider;
 
@@ -26,6 +28,7 @@ public class VelikoController implements Initializable {
     DataSourceProvider provider;
     StationController stationController;
     UserController userController;
+    StationFavController stationFavController;
 
     @FXML
     private WebView wvVeliko;
@@ -71,6 +74,8 @@ public class VelikoController implements Initializable {
 
         stationController = new StationController();
         userController = new UserController();
+        stationFavController = new StationFavController();
+
         ArrayList<User> lesUser = new ArrayList<>();
         List<Station> stations;
         try {
@@ -92,7 +97,11 @@ public class VelikoController implements Initializable {
                 if (newState == javafx.concurrent.Worker.State.SUCCEEDED) {
 
                     //Renvoyer liste des stations
-                    webEngine.executeScript("window.stations = " + convertStationsToJson(stations) + ";");
+                    try {
+                        webEngine.executeScript("window.stations = " + convertStationsToJson(stations) + ";");
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
 
                     //Lancer la fonction loadStations()
                     webEngine.executeScript("loadStations();");
@@ -117,16 +126,28 @@ public class VelikoController implements Initializable {
     }
 
     // convert list of stations to json
-    private String convertStationsToJson(List<Station> stations) {
+    private String convertStationsToJson(List<Station> stations) throws SQLException {
         StringBuilder json = new StringBuilder("[");
+        ArrayList<StationFav> lesFav = new ArrayList<>();
+        lesFav = stationFavController.allFavStation();
+
         for (Station station : stations) {
+
+            int favCount = 0;
+            for (StationFav fav : lesFav) {
+                if (fav.getStation_id() == station.getStation_id()) {
+                    favCount++;
+                }
+            }
+
             json.append("{")
                     .append("\"name\":\"").append(station.getName()).append("\",")
                     .append("\"lat\":").append(station.getLat()).append(",")
                     .append("\"lon\":").append(station.getLon()).append(",")
                     .append("\"capacity\":").append(station.getCapacity()).append(",")
                     .append("\"mechanical_bikes\":").append(station.getNum_mechanical_bikes_available()).append(",")
-                    .append("\"electric_bikes\":").append(station.getNum_electric_bikes_available())
+                    .append("\"electric_bikes\":").append(station.getNum_electric_bikes_available()).append(",")
+                    .append("\"favCount\":").append(favCount)
                     .append("},");
         }
         if (json.length() > 1) {
@@ -146,6 +167,7 @@ public class VelikoController implements Initializable {
             }
             appGestionDesUtilisateurs.toFront();
         } else if (actionEvent.getSource() == menuGestionParc) {
+
             appGestionParc.toFront();
         } else if (actionEvent.getSource() == menuTableauDeBord) {
             appTableauDeBord.toFront();

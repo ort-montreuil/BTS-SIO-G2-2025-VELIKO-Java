@@ -113,7 +113,6 @@ public class VelikoController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     // convert list of stations to json
@@ -207,6 +206,7 @@ public class VelikoController implements Initializable {
         }
     }
 
+    @FXML
     public void btnChangementDeMotDePasseClicked(javafx.scene.input.MouseEvent mouseEvent) throws SQLException {
         User user = (User) tvUtilisateurs.getSelectionModel().getSelectedItem();
         if (userController.ChangePassword(user))

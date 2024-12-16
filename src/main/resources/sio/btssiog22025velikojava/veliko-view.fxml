@@ -14,13 +14,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.VelikoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.VelikoController">
    <children>
       <BorderPane layoutY="-1.0" prefHeight="487.0" prefWidth="760.0">
          <top>
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lblTitre" alignment="CENTER" prefHeight="100.0" prefWidth="762.0" style="-fx-background-color: grey;" text="Espace administrateur" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
+                  <Label fx:id="lblTitre" alignment="CENTER" prefHeight="100.0" prefWidth="762.0" style="-fx-background-color: linear-gradient(to right, #91d97d, #ccfcff);" text="Espace administrateur" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
                      <font>
                         <Font name="Times New Roman" size="32.0" />
                      </font>
@@ -29,9 +29,9 @@
             </HBox>
          </top>
          <left>
-            <VBox prefHeight="387.0" prefWidth="242.0" style="-fx-background-color: grey;" BorderPane.alignment="CENTER">
+            <VBox prefHeight="387.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #91d97d, #ccfcff);" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="menuGestionUtilisateurs" alignment="CENTER" graphicTextGap="20.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: #bbbbbb;" text="Gestion des utilisateurs">
+                  <Button fx:id="menuGestionUtilisateurs" alignment="CENTER" graphicTextGap="20.0" lineSpacing="10.0" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #d0f4cc, #f0ffff);;" text="Gestion des utilisateurs">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -45,7 +45,7 @@
                            </image></ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="menuGestionParc" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: #bbbbbb;" text="Gestion du parc de vélos">
+                  <Button fx:id="menuGestionParc" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #d0f4cc, #f0ffff);;" text="Gestion du parc de vélos">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -59,7 +59,7 @@
                            </image></ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="menuTableauDeBord" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: #bbbbbb;" text="Tableau de bord">
+                  <Button fx:id="menuTableauDeBord" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #d0f4cc, #f0ffff);;" text="Tableau de bord">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -83,23 +83,23 @@
                <children>
                   <AnchorPane fx:id="appGestionDesUtilisateurs" prefHeight="387.0" prefWidth="519.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView fx:id="tvUtilisateurs" layoutX="12.0" layoutY="14.0" prefHeight="257.0" prefWidth="497.0">
+                        <TableView fx:id="tvUtilisateurs" layoutX="11.0" layoutY="14.0" prefHeight="258.0" prefWidth="498.0">
                           <columns>
                             <TableColumn fx:id="tcNom" prefWidth="102.5" text="Nom" />
                             <TableColumn fx:id="tcPrenom" prefWidth="97.0" text="Prénom" />
-                              <TableColumn fx:id="tcEmail" prefWidth="185.5" text="Email" />
-                              <TableColumn fx:id="tcStatut" prefWidth="111.0" text="Statut" />
+                              <TableColumn fx:id="tcEmail" prefWidth="185.5" style="-: 15;" text="Email" />
+                              <TableColumn fx:id="tcStatut" prefWidth="111.20001831054685" text="Statut" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnSupprimer" layoutX="391.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#deleteClicked" text="Supprimer">
+                        <Button fx:id="btnSupprimer" layoutX="391.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#deleteClicked" style="-fx-background-radius: 15;" text="Supprimer">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#btnChangementDeMotDePasseClicked" prefHeight="23.0" prefWidth="240.0" text="Forcer un changement de mot de passe">
+                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#btnChangementDeMotDePasseClicked" prefHeight="23.0" prefWidth="240.0" style="-fx-background-radius: 15;" text="Forcer un changement de mot de passe">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnBlocage" layoutX="75.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#blockClicked" text="Bloquer/Débloquer l'utilisateur sélectionné">
+                        <Button fx:id="btnBlocage" layoutX="75.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#blockClicked" style="-fx-background-radius: 15;" text="Bloquer/Débloquer l'utilisateur sélectionné">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>

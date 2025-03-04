@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.VelikoController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.VelikoController">
    <children>
       <BorderPane layoutY="-1.0" prefHeight="487.0" prefWidth="760.0">
          <top>
@@ -87,7 +87,7 @@
                           <columns>
                             <TableColumn fx:id="tcNom" prefWidth="102.5" text="Nom" />
                             <TableColumn fx:id="tcPrenom" prefWidth="97.0" text="Prénom" />
-                              <TableColumn fx:id="tcEmail" prefWidth="185.5" style="-: 15;" text="Email" />
+                              <TableColumn fx:id="tcEmail" prefWidth="185.5" style="-::15;" text="Email" />
                               <TableColumn fx:id="tcStatut" prefWidth="111.20001831054685" text="Statut" />
                           </columns>
                         </TableView>
@@ -110,7 +110,66 @@
                         <WebView fx:id="wvVeliko" layoutX="-0.8" prefHeight="390.0" prefWidth="523.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appTableauDeBord" prefHeight="389.0" prefWidth="520.0" style="-fx-background-color: white;" />
+                  <AnchorPane fx:id="appTableauDeBord" prefHeight="389.0" prefWidth="520.0" style="-fx-background-color: white;">
+                  <children>
+                     <!-- Indicateurs clés -->
+                     <HBox alignment="CENTER" layoutY="49.0" prefHeight="80.0" prefWidth="520.0" spacing="20">
+                        <children>
+                              <Button fx:id="btnRetourStat" mnemonicParsing="false" onMouseClicked="#btnRetourStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&lt;&lt;" textFill="WHITE" />
+                           <VBox alignment="CENTER" spacing="5">
+                              <Label text="Total Station" />
+                              <Label fx:id="lblTotalStation" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                           </VBox>
+                           <VBox alignment="CENTER" spacing="5">
+                              <Label text="Station Favorie" />
+                              <Label fx:id="lblTotalFavorie" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="N/A" />
+                           </VBox>
+                              <VBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <Label text="Station Reservation" />
+                                    <Label fx:id="lblTotalReservation" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="N/A" />
+                                 </children>
+                              </VBox>
+                              <Button fx:id="btnSuivantStat" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
+                        </children>
+                     </HBox>
+
+                           <!-- Tableau des stations -->
+                     <TableView fx:id="tvStations" layoutX="10.0" layoutY="219.0" prefHeight="163.0" prefWidth="500.0">
+                        <columns>
+                           <TableColumn fx:id="tcStation" prefWidth="177.0" text="Station" />
+                           <TableColumn fx:id="tcVelosDispo" prefWidth="112.0" text="Vélos Dispo" />
+                           <TableColumn fx:id="tcBornesLibres" prefWidth="100.0" text="Bornes Libres" />
+                           <TableColumn fx:id="tcUtilisation" prefWidth="110.0" text="Utilisation (%)" />
+                        </columns>
+                     </TableView>
+                        <HBox alignment="CENTER" layoutY="129.0" prefHeight="80.0" prefWidth="520.0" spacing="20">
+                           <children>
+                           <VBox alignment="CENTER" spacing="5">
+                              <Label text="Total Vélos" />
+                              <Label fx:id="lblTotalVelos" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                           </VBox>
+                              <VBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <Label text="Vélos Mecanique" />
+                                    <Label fx:id="lblTotalVelosMecanique" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <Label text="Vélos Electrique" />
+                                    <Label fx:id="lblTotalVelosElectrique" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Label layoutX="197.0" layoutY="23.0" text="Page Statistique N°1">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                  </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
          </center>

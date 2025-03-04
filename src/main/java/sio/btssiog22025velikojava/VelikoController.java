@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import sio.btssiog22025velikojava.controllers.StatController;
 import sio.btssiog22025velikojava.controllers.StationController;
 import sio.btssiog22025velikojava.controllers.UserController;
 import sio.btssiog22025velikojava.models.Station;
@@ -26,6 +27,7 @@ public class VelikoController implements Initializable {
     DataSourceProvider provider;
     StationController stationController;
     UserController userController;
+    StatController statController;
 
     @FXML
     private WebView wvVeliko;
@@ -59,6 +61,32 @@ public class VelikoController implements Initializable {
     private Button menuTableauDeBord;
     @FXML
     private TableColumn tcPrenom;
+    @FXML
+    private TableColumn tcVelosDispo;
+    @FXML
+    private Label lblTotalVelosMecanique;
+    @FXML
+    private Label lblTotalReservation;
+    @FXML
+    private TableColumn tcBornesLibres;
+    @FXML
+    private TableColumn tcUtilisation;
+    @FXML
+    private Button btnRetourStat;
+    @FXML
+    private Label lblTotalFavorie;
+    @FXML
+    private Button btnSuivantStat;
+    @FXML
+    private Label lblTotalVelosElectrique;
+    @FXML
+    private TableView tvStations;
+    @FXML
+    private Label lblTotalStation;
+    @FXML
+    private Label lblTotalVelos;
+    @FXML
+    private TableColumn tcStation;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,6 +99,8 @@ public class VelikoController implements Initializable {
 
         stationController = new StationController();
         userController = new UserController();
+        statController = new StatController();
+
         ArrayList<User> lesUser = new ArrayList<>();
         List<Station> stations;
         try {
@@ -113,6 +143,19 @@ public class VelikoController implements Initializable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        //Statistiques
+        try {
+            lblTotalStation.setText(String.valueOf(statController.countStation()));
+            lblTotalVelos.setText(String.valueOf(statController.countBikes()));
+            lblTotalVelosMecanique.setText(String.valueOf(statController.countMechanicalBikes()));
+            lblTotalVelosElectrique.setText(String.valueOf(statController.countElectricBikes()));
+            lblTotalReservation.setText(String.valueOf(statController.countReservations()));
+            lblTotalFavorie.setText(String.valueOf(statController.countFavoriteStation()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     // convert list of stations to json
@@ -217,5 +260,13 @@ public class VelikoController implements Initializable {
         {
             userController.forceUser(user.getEmail());
         }
+    }
+
+    @FXML
+    public void btnRetourStatClicked(Event event) {
+    }
+
+    @FXML
+    public void btnSuivantStatClicked(Event event) {
     }
 }

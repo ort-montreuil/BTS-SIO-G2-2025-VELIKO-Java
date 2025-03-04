@@ -121,12 +121,12 @@
                               <Label fx:id="lblTotalStation" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
                            </VBox>
                            <VBox alignment="CENTER" spacing="5">
-                              <Label text="Station Favorie" />
+                              <Label text="Total Favori" />
                               <Label fx:id="lblTotalFavorie" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="N/A" />
                            </VBox>
                               <VBox alignment="CENTER" spacing="5">
                                  <children>
-                                    <Label text="Station Reservation" />
+                                    <Label text="Total Réservation" />
                                     <Label fx:id="lblTotalReservation" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="N/A" />
                                  </children>
                               </VBox>
@@ -151,13 +151,13 @@
                            </VBox>
                               <VBox alignment="CENTER" spacing="5">
                                  <children>
-                                    <Label text="Vélos Mecanique" />
+                                    <Label text="Vélos Mecaniques" />
                                     <Label fx:id="lblTotalVelosMecanique" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
                                  </children>
                               </VBox>
                               <VBox alignment="CENTER" spacing="5">
                                  <children>
-                                    <Label text="Vélos Electrique" />
+                                    <Label text="Vélos Electriques" />
                                     <Label fx:id="lblTotalVelosElectrique" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
                                  </children>
                               </VBox>

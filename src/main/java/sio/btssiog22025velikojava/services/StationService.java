@@ -16,4 +16,5 @@ public class StationService {
     public ArrayList<Station> allStation() throws SQLException {
         return stationRepository.allStation();
     }
+
 }

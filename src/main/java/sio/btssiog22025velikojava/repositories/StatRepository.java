@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class StatRepository {
     private Connection connection;
@@ -68,5 +70,41 @@ public class StatRepository {
         ps.close();
         return count;
     }
+
+    public Map<String, Integer> getReservationsByStationDepart() throws SQLException {
+        Map<String, Integer> reservationsByStation = new HashMap<>();
+
+        String query = "SELECT station.name, COUNT(reservation.id_station_depart) AS reservation_count FROM station LEFT JOIN reservation ON station.station_id = reservation.id_station_depart GROUP BY station.name ORDER BY reservation_count DESC LIMIT 10;";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            reservationsByStation.put(rs.getString("name"), rs.getInt("reservation_count"));
+        }
+
+        rs.close();
+        ps.close();
+
+        return reservationsByStation;
+    }
+    public Map<String, Integer> getReservationsByStationArrive() throws SQLException {
+        Map<String, Integer> reservationsByStation = new HashMap<>();
+
+        String query = "SELECT station.name, COUNT(reservation.id_station_fin) AS reservation_count FROM station LEFT JOIN reservation ON station.station_id = reservation.id_station_fin GROUP BY station.name ORDER BY reservation_count DESC LIMIT 10;";
+
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            reservationsByStation.put(rs.getString("name"), rs.getInt("reservation_count"));
+        }
+
+        rs.close();
+        ps.close();
+
+        return reservationsByStation;
+    }
+
 
 }

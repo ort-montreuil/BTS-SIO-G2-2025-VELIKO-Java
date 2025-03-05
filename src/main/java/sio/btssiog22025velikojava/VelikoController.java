@@ -1,9 +1,11 @@
 package sio.btssiog22025velikojava;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -20,6 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class VelikoController implements Initializable {
@@ -51,8 +54,6 @@ public class VelikoController implements Initializable {
     private Button menuGestionUtilisateurs;
     @FXML
     private AnchorPane appGestionParc;
-    @FXML
-    private AnchorPane appTableauDeBord;
     @FXML
     private AnchorPane appGestionDesUtilisateurs;
     @FXML
@@ -87,6 +88,24 @@ public class VelikoController implements Initializable {
     private Label lblTotalVelos;
     @FXML
     private TableColumn tcStation;
+    @FXML
+    private AnchorPane appTableauDeBord2;
+    @FXML
+    private AnchorPane appTableauDeBord1;
+    @FXML
+    private Button btnSuivantStat2;
+    @FXML
+    private Button btnRetourStat2;
+    @FXML
+    private PieChart pcReservationStationDepart;
+    @FXML
+    private PieChart pcReservationStationArrive;
+    @FXML
+    private Button btnSuivantStat3;
+    @FXML
+    private AnchorPane appTableauDeBord3;
+    @FXML
+    private Button btnRetourStat3;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -152,11 +171,17 @@ public class VelikoController implements Initializable {
             lblTotalVelosElectrique.setText(String.valueOf(statController.countElectricBikes()));
             lblTotalReservation.setText(String.valueOf(statController.countReservations()));
             lblTotalFavorie.setText(String.valueOf(statController.countFavoriteStation()));
+
+            loadPieChartData(pcReservationStationDepart, statController.getReservationsByStationDepart());
+            loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
+
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
+
 
     // convert list of stations to json
     private String convertStationsToJson(List<Station> stations) {
@@ -190,7 +215,7 @@ public class VelikoController implements Initializable {
         } else if (actionEvent.getSource() == menuGestionParc) {
             appGestionParc.toFront();
         } else if (actionEvent.getSource() == menuTableauDeBord) {
-            appTableauDeBord.toFront();
+            appTableauDeBord1.toFront();
         }
     }
 
@@ -263,10 +288,47 @@ public class VelikoController implements Initializable {
     }
 
     @FXML
-    public void btnRetourStatClicked(Event event) {
+    public void btnSuivantStatClicked(Event event) {
+        if (appTableauDeBord1.isVisible()) {
+            appTableauDeBord1.setVisible(false);
+            appTableauDeBord2.setVisible(true);
+            appTableauDeBord2.toFront();
+        } else if (appTableauDeBord2.isVisible()) {
+            appTableauDeBord2.setVisible(false);
+            appTableauDeBord3.setVisible(true);
+            appTableauDeBord3.toFront();
+        }
     }
 
     @FXML
-    public void btnSuivantStatClicked(Event event) {
+    public void btnRetourStatClicked(Event event) {
+        if (appTableauDeBord2.isVisible()) {
+            appTableauDeBord2.setVisible(false);
+            appTableauDeBord1.setVisible(true);
+            appTableauDeBord1.toFront();
+        } else if (appTableauDeBord3.isVisible()) {
+            appTableauDeBord3.setVisible(false);
+            appTableauDeBord2.setVisible(true);
+            appTableauDeBord2.toFront();
+        }
     }
+
+    private void loadPieChartData(PieChart pieChart, Map<String, Integer> reservationData) {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+
+        for (Map.Entry<String, Integer> entry : reservationData.entrySet()) {
+            PieChart.Data data = new PieChart.Data(entry.getKey(), entry.getValue());
+            pieChartData.add(data);
+        }
+
+        pieChart.setData(pieChartData);
+        pieChart.setLegendVisible(true);
+
+        for (PieChart.Data data : pieChartData) {
+            Tooltip tooltip = new Tooltip(data.getName() + ": " + (int) data.getPieValue());
+            Tooltip.install(data.getNode(), tooltip);
+        }
+    }
+
+
 }

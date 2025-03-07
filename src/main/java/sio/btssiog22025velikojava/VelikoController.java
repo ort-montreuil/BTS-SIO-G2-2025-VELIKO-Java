@@ -1,18 +1,21 @@
 package sio.btssiog22025velikojava;
 
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.PieChart;
+import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import sio.btssiog22025velikojava.controllers.ReservationController;
 import sio.btssiog22025velikojava.controllers.StatController;
 import sio.btssiog22025velikojava.controllers.StationController;
 import sio.btssiog22025velikojava.controllers.UserController;
@@ -33,6 +36,7 @@ public class VelikoController implements Initializable {
     StationController stationController;
     UserController userController;
     StatController statController;
+    ReservationController reservationController;
 
     @FXML
     private WebView wvVeliko;
@@ -108,6 +112,12 @@ public class VelikoController implements Initializable {
     private TableColumn<Station,Integer> tcEmplacement;
     @FXML
     private TableColumn<Station,Integer> tcNombreVelos;
+    @FXML
+    private ScatterChart<Number, Number> scBikeByMonth;
+    @FXML
+    private NumberAxis xAxis;
+    @FXML
+    private NumberAxis yAxis;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -118,15 +128,17 @@ public class VelikoController implements Initializable {
             throw new RuntimeException(e);
         }
 
+        //initialisation of controllers
         stationController = new StationController();
         userController = new UserController();
         statController = new StatController();
+        reservationController = new ReservationController();
 
-        ArrayList<User> lesUsers = new ArrayList<>();
+        //ArrayList<User> lesUsers = new ArrayList<>();
         List<Station> stations;
         try {
             stations = stationController.allStation();
-            lesUsers = userController.allUsers();
+            //lesUsers = userController.allUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -136,7 +148,7 @@ public class VelikoController implements Initializable {
         URL mapUrl = getClass().getResource("/html/map.html");
 
         if (mapUrl != null) {
-            //Charger la map
+            //Load map
             webEngine.load(mapUrl.toExternalForm());
 
             webEngine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
@@ -174,52 +186,30 @@ public class VelikoController implements Initializable {
             lblTotalReservation.setText(String.valueOf(statController.countReservations()));
             lblTotalFavorie.setText(String.valueOf(statController.countFavoriteStation()));
 
+            loadTableStation();
+            loadScatterChart();
 
-            ArrayList<Station> stationsList = stationController.allStation();
-            tcStation.setCellValueFactory(new PropertyValueFactory<>("name"));
-
-            tcEmplacement.setCellValueFactory(cellData -> {
-                Station station = cellData.getValue();
-                int totalBornes = station.getCapacity();
-                return new SimpleIntegerProperty(totalBornes).asObject();
-            });
-            tcNombreVelos.setCellValueFactory(cellData -> {
-                Station station = cellData.getValue();
-                int totalBikes = station.getNum_mechanical_bikes_available() + station.getNum_electric_bikes_available();
-                return new SimpleIntegerProperty(totalBikes).asObject();
-            });
-            tcTauxRemplissage.setCellValueFactory(cellData -> {
-                Station station = cellData.getValue();
-                int capacity = station.getCapacity();
-                if (capacity != 0) {
-                    int utilisation = (int) Math.round(((double) (station.getNum_mechanical_bikes_available() + station.getNum_electric_bikes_available()) / capacity) * 100);
-                    return new SimpleIntegerProperty(utilisation).asObject();
-                } else {
-                    return new SimpleIntegerProperty(0).asObject();
-                }
-            });
-
-            // Affichage du pourcentage dans la colonne
-            tcTauxRemplissage.setCellFactory(column -> new TableCell<>() {
-                @Override
-                protected void updateItem(Integer item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setText(null);
-                    } else {
-                        setText(item + "%");
-                    }
-                }
-            });
-
-            tvStations.setItems(FXCollections.observableArrayList(stationsList));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-
+    @FXML
+    public void menuClicked(javafx.event.ActionEvent actionEvent) throws SQLException {
+        if (actionEvent.getSource() == menuGestionUtilisateurs) {
+            try {
+                tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            appGestionDesUtilisateurs.toFront();
+        } else if (actionEvent.getSource() == menuGestionParc) {
+            appGestionParc.toFront();
+        } else if (actionEvent.getSource() == menuTableauDeBord) {
+            appTableauDeBord1.toFront();
+        }
+    }
     // convert list of stations to json
     private String convertStationsToJson(List<Station> stations) {
         StringBuilder json = new StringBuilder("[");
@@ -238,22 +228,6 @@ public class VelikoController implements Initializable {
         }
         json.append("]");
         return json.toString();
-    }
-
-    @FXML
-    public void menuClicked(javafx.event.ActionEvent actionEvent) throws SQLException {
-        if (actionEvent.getSource() == menuGestionUtilisateurs) {
-            try {
-                tvUtilisateurs.setItems(FXCollections.observableArrayList(userController.allUsers()));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            appGestionDesUtilisateurs.toFront();
-        } else if (actionEvent.getSource() == menuGestionParc) {
-            appGestionParc.toFront();
-        } else if (actionEvent.getSource() == menuTableauDeBord) {
-            appTableauDeBord1.toFront();
-        }
     }
 
     @FXML
@@ -339,6 +313,13 @@ public class VelikoController implements Initializable {
             appTableauDeBord2.setVisible(false);
             appTableauDeBord3.setVisible(true);
             appTableauDeBord3.toFront();
+
+            loadScatterChart();
+
+        } else if (appTableauDeBord3.isVisible()) {
+            appTableauDeBord3.setVisible(false);
+            appTableauDeBord1.setVisible(true);
+            appTableauDeBord1.toFront();
         }
     }
 
@@ -348,6 +329,7 @@ public class VelikoController implements Initializable {
             appTableauDeBord2.setVisible(false);
             appTableauDeBord1.setVisible(true);
             appTableauDeBord1.toFront();
+
         } else if (appTableauDeBord3.isVisible()) {
             appTableauDeBord3.setVisible(false);
             appTableauDeBord2.setVisible(true);
@@ -356,6 +338,13 @@ public class VelikoController implements Initializable {
             loadPieChartData(pcReservationStationDepart, statController.getReservationsByStationDepart());
             loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
             appTableauDeBord2.toFront();
+        }
+        else if (appTableauDeBord1.isVisible()) {
+            appTableauDeBord1.setVisible(false);
+            appTableauDeBord3.setVisible(true);
+            appTableauDeBord3.toFront();
+
+            loadScatterChart();
         }
     }
 
@@ -374,6 +363,88 @@ public class VelikoController implements Initializable {
             Tooltip tooltip = new Tooltip(data.getName() + ": " + (int) data.getPieValue());
             Tooltip.install(data.getNode(), tooltip);
         }
+    }
+
+    public void loadTableStation() throws SQLException {
+        ArrayList<Station> stationsList = stationController.allStation();
+        tcStation.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        tcEmplacement.setCellValueFactory(cellData -> {
+            Station station = cellData.getValue();
+            int totalBornes = station.getCapacity();
+            return new SimpleIntegerProperty(totalBornes).asObject();
+        });
+        tcNombreVelos.setCellValueFactory(cellData -> {
+            Station station = cellData.getValue();
+            int totalBikes = station.getNum_mechanical_bikes_available() + station.getNum_electric_bikes_available();
+            return new SimpleIntegerProperty(totalBikes).asObject();
+        });
+        tcTauxRemplissage.setCellValueFactory(cellData -> {
+            Station station = cellData.getValue();
+            int capacity = station.getCapacity();
+            if (capacity != 0) {
+                int utilisation = (int) Math.round(((double) (station.getNum_mechanical_bikes_available() + station.getNum_electric_bikes_available()) / capacity) * 100);
+                return new SimpleIntegerProperty(utilisation).asObject();
+            } else {
+                return new SimpleIntegerProperty(0).asObject();
+            }
+        });
+
+        // Affichage du pourcentage dans la colonne
+        tcTauxRemplissage.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item + "%");
+                }
+            }
+        });
+
+        tvStations.setItems(FXCollections.observableArrayList(stationsList));
+    }
+
+    public void loadScatterChart() {
+
+        ArrayList<Map<String, Object>> reservationsByMonthAndType = reservationController.getReservationsByMonthAndType();
+
+        XYChart.Series<Number, Number> classicBikeSeries = new XYChart.Series<>();
+        classicBikeSeries.setName("Vélos Mecaniques");
+
+        XYChart.Series<Number, Number> electricBikeSeries = new XYChart.Series<>();
+        electricBikeSeries.setName("Vélos Électriques");
+
+        for (Map<String, Object> reservation : reservationsByMonthAndType) {
+
+            int month = (int) reservation.get("month");
+            String bikeType = (String) reservation.get("bikeType");
+            int reservations = (int) reservation.get("reservations");
+
+            // Ajouter les données selon le type de vélo
+            if (bikeType.equals("Mecanique")) {
+                classicBikeSeries.getData().add(new XYChart.Data<>(month, reservations));
+            } else if (bikeType.equals("Evelo")) {
+                electricBikeSeries.getData().add(new XYChart.Data<>(month, reservations));
+            }
+        }
+        scBikeByMonth.getData().clear();
+
+        scBikeByMonth.getData().addAll(classicBikeSeries, electricBikeSeries);
+
+        // Ajouter un tooltip aux points des vélos mécaniques
+        for (XYChart.Data<Number, Number> data : classicBikeSeries.getData()) {
+            Tooltip tooltip = new Tooltip("Mois: " + data.getXValue() + "\nRéservations: " + data.getYValue()+" Vélos Mecaniques");
+            Tooltip.install(data.getNode(), tooltip);
+        }
+
+        // Ajouter un tooltip aux points des vélos électriques
+        for (XYChart.Data<Number, Number> data : electricBikeSeries.getData()) {
+            Tooltip tooltip = new Tooltip("Mois: " + data.getXValue() + "\nRéservations: " + data.getYValue()+" Vélos Electriques");
+            Tooltip.install(data.getNode(), tooltip);
+        }
+
     }
 
 

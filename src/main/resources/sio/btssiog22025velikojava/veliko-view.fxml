@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.chart.ScatterChart?>
@@ -25,7 +24,7 @@
          <top>
             <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lblTitre" alignment="CENTER" prefHeight="100.0" prefWidth="788.0" style="-fx-background-color: linear-gradient(to right, #91d97d, #ccfcff);" text="Espace administrateur" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
+                  <Label fx:id="lblTitre" alignment="CENTER" prefHeight="100.0" prefWidth="774.0" style="-fx-background-color: linear-gradient(to right, #91d97d, #ccfcff);" text="Espace administrateur" textAlignment="CENTER" textOverrun="LEADING_ELLIPSIS">
                      <font>
                         <Font name="Times New Roman" size="32.0" />
                      </font>
@@ -96,26 +95,26 @@
                               <TableColumn fx:id="tcStatut" prefWidth="111.20001831054685" style="-fx-alignment: center;" text="Statut" />
                           </columns>
                         </TableView>
-                        <Button fx:id="btnSupprimer" layoutX="391.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#deleteClicked" style="-fx-background-radius: 15;" text="Supprimer">
+                        <Button fx:id="btnSupprimer" layoutX="390.0" layoutY="310.0" mnemonicParsing="false" onMouseClicked="#deleteClicked" style="-fx-background-radius: 15; -fx-background-color: #D32F2F; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 15px; -fx-background-radius: 5px; -fx-cursor: hand;" text="Supprimer">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#btnChangementDeMotDePasseClicked" prefHeight="23.0" prefWidth="240.0" style="-fx-background-radius: 15;" text="Forcer un changement de mot de passe">
+                        <Button fx:id="btnChangementDeMotDePasse" layoutX="75.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#btnChangementDeMotDePasseClicked" prefHeight="24.0" prefWidth="286.0" style="-fx-background-radius: 15; -fx-background-color: #1976D2; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5px 15px;" text="Forcer un changement de mot de passe">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
-                        <Button fx:id="btnBlocage" layoutX="75.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#blockClicked" style="-fx-background-radius: 15;" text="Bloquer/Débloquer l'utilisateur sélectionné">
+                        <Button fx:id="btnBlocage" layoutX="75.0" layoutY="335.0" mnemonicParsing="false" onMouseClicked="#blockClicked" style="-fx-background-radius: 15; -fx-background-color: #FFA000; -fx-text-fill: white; -fx-font-weight: bold;" text="Bloquer/Débloquer l'utilisateur sélectionné">
                            <font>
                               <Font name="Constantia" size="13.0" />
                            </font></Button>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appGestionParc" prefHeight="390.0" prefWidth="522.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="-2.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane fx:id="appGestionParc" layoutX="-1.0" layoutY="2.0" prefHeight="387.0" prefWidth="525.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <WebView fx:id="wvVeliko" layoutX="-0.8" prefHeight="390.0" prefWidth="523.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <WebView fx:id="wvVeliko" layoutX="-5.0" layoutY="-3.0" prefHeight="390.0" prefWidth="524.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appTableauDeBord1" prefHeight="389.0" prefWidth="518.0" style="-fx-background-color: white;">
+                  <AnchorPane fx:id="appTableauDeBord1" prefHeight="389.0" prefWidth="518.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                   <children>
                      <!-- Indicateurs clés -->
                      <HBox alignment="CENTER" layoutY="49.0" prefHeight="80.0" prefWidth="520.0" spacing="20">
@@ -166,7 +165,7 @@
                               </VBox>
                            </children>
                         </HBox>
-                        <Label layoutX="197.0" layoutY="23.0" text="Page Statistique N°1">
+                        <Label layoutX="197.0" layoutY="20.0" text="Page Statistique N°1">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -175,11 +174,11 @@
                         <Button fx:id="btnSuivantStat" layoutX="445.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
                   </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appTableauDeBord2" prefHeight="386.0" prefWidth="519.0" style="-fx-background-color: white;">
+                  <AnchorPane fx:id="appTableauDeBord2" prefHeight="386.0" prefWidth="519.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Button fx:id="btnSuivantStat2" layoutX="445.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
                         <Button fx:id="btnRetourStat2" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnRetourStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&lt;&lt;" textFill="WHITE" />
-                        <Label layoutX="210.0" layoutY="30.0" text="Page Statistique N°2">
+                        <Label layoutX="196.0" layoutY="20.0" text="Page Statistique N°2">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -200,21 +199,21 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appTableauDeBord3" prefHeight="386.0" prefWidth="519.0" style="-fx-background-color: white;">
+                  <AnchorPane fx:id="appTableauDeBord3" prefHeight="386.0" prefWidth="519.0" style="-fx-background-color: white;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <Button fx:id="btnSuivantStat3" layoutX="445.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
                         <Button fx:id="btnRetourStat3" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnRetourStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&lt;&lt;" textFill="WHITE" />
-                        <Label layoutX="210.0" layoutY="30.0" text="Page Statistique N°3">
+                        <Label layoutX="196.0" layoutY="20.0" text="Page Statistique N°3">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ScatterChart layoutX="77.0" layoutY="50.0" prefHeight="329.0" prefWidth="393.0">
+                        <ScatterChart fx:id="scBikeByMonth" layoutX="63.0" layoutY="50.0" prefHeight="329.0" prefWidth="393.0" title="Nombre de Réservations par Mois et Type de Vélo" titleSide="BOTTOM">
                           <xAxis>
-                            <CategoryAxis side="BOTTOM" />
+                             <NumberAxis label="Mois" lowerBound="1" tickLabelGap="0.0" upperBound="11.0" fx:id="xAxis" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis side="LEFT" />
+                             <NumberAxis fx:id="yAxis" autoRanging="true" label="Réservations" upperBound="200.0" />
                           </yAxis>
                         </ScatterChart>
                      </children>

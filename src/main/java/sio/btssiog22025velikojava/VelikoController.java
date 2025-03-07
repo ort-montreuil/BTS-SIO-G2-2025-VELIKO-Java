@@ -1,5 +1,7 @@
 package sio.btssiog22025velikojava;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -63,15 +65,9 @@ public class VelikoController implements Initializable {
     @FXML
     private TableColumn tcPrenom;
     @FXML
-    private TableColumn tcVelosDispo;
-    @FXML
     private Label lblTotalVelosMecanique;
     @FXML
     private Label lblTotalReservation;
-    @FXML
-    private TableColumn tcBornesLibres;
-    @FXML
-    private TableColumn tcUtilisation;
     @FXML
     private Button btnRetourStat;
     @FXML
@@ -81,7 +77,7 @@ public class VelikoController implements Initializable {
     @FXML
     private Label lblTotalVelosElectrique;
     @FXML
-    private TableView tvStations;
+    private TableView<Station> tvStations;
     @FXML
     private Label lblTotalStation;
     @FXML
@@ -106,6 +102,12 @@ public class VelikoController implements Initializable {
     private AnchorPane appTableauDeBord3;
     @FXML
     private Button btnRetourStat3;
+    @FXML
+    private TableColumn<Station,Integer> tcTauxRemplissage;
+    @FXML
+    private TableColumn<Station,Integer> tcEmplacement;
+    @FXML
+    private TableColumn<Station,Integer> tcNombreVelos;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -120,11 +122,11 @@ public class VelikoController implements Initializable {
         userController = new UserController();
         statController = new StatController();
 
-        ArrayList<User> lesUser = new ArrayList<>();
+        ArrayList<User> lesUsers = new ArrayList<>();
         List<Station> stations;
         try {
             stations = stationController.allStation();
-            lesUser = userController.allUsers();
+            lesUsers = userController.allUsers();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -172,10 +174,45 @@ public class VelikoController implements Initializable {
             lblTotalReservation.setText(String.valueOf(statController.countReservations()));
             lblTotalFavorie.setText(String.valueOf(statController.countFavoriteStation()));
 
-            loadPieChartData(pcReservationStationDepart, statController.getReservationsByStationDepart());
-            loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
 
+            ArrayList<Station> stationsList = stationController.allStation();
+            tcStation.setCellValueFactory(new PropertyValueFactory<>("name"));
 
+            tcEmplacement.setCellValueFactory(cellData -> {
+                Station station = cellData.getValue();
+                int totalBornes = station.getCapacity();
+                return new SimpleIntegerProperty(totalBornes).asObject();
+            });
+            tcNombreVelos.setCellValueFactory(cellData -> {
+                Station station = cellData.getValue();
+                int totalBikes = station.getNum_mechanical_bikes_available() + station.getNum_electric_bikes_available();
+                return new SimpleIntegerProperty(totalBikes).asObject();
+            });
+            tcTauxRemplissage.setCellValueFactory(cellData -> {
+                Station station = cellData.getValue();
+                int capacity = station.getCapacity();
+                if (capacity != 0) {
+                    int utilisation = (int) Math.round(((double) (station.getNum_mechanical_bikes_available() + station.getNum_electric_bikes_available()) / capacity) * 100);
+                    return new SimpleIntegerProperty(utilisation).asObject();
+                } else {
+                    return new SimpleIntegerProperty(0).asObject();
+                }
+            });
+
+            // Affichage du pourcentage dans la colonne
+            tcTauxRemplissage.setCellFactory(column -> new TableCell<>() {
+                @Override
+                protected void updateItem(Integer item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setText(null);
+                    } else {
+                        setText(item + "%");
+                    }
+                }
+            });
+
+            tvStations.setItems(FXCollections.observableArrayList(stationsList));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -288,11 +325,16 @@ public class VelikoController implements Initializable {
     }
 
     @FXML
-    public void btnSuivantStatClicked(Event event) {
+    public void btnSuivantStatClicked(Event event) throws SQLException {
         if (appTableauDeBord1.isVisible()) {
             appTableauDeBord1.setVisible(false);
             appTableauDeBord2.setVisible(true);
+
+            //Load pie chart data with animation
+            loadPieChartData(pcReservationStationDepart, statController.getReservationsByStationDepart());
+            loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
             appTableauDeBord2.toFront();
+
         } else if (appTableauDeBord2.isVisible()) {
             appTableauDeBord2.setVisible(false);
             appTableauDeBord3.setVisible(true);
@@ -301,7 +343,7 @@ public class VelikoController implements Initializable {
     }
 
     @FXML
-    public void btnRetourStatClicked(Event event) {
+    public void btnRetourStatClicked(Event event) throws SQLException {
         if (appTableauDeBord2.isVisible()) {
             appTableauDeBord2.setVisible(false);
             appTableauDeBord1.setVisible(true);
@@ -309,6 +351,10 @@ public class VelikoController implements Initializable {
         } else if (appTableauDeBord3.isVisible()) {
             appTableauDeBord3.setVisible(false);
             appTableauDeBord2.setVisible(true);
+
+            //Load pie chart data with animation
+            loadPieChartData(pcReservationStationDepart, statController.getReservationsByStationDepart());
+            loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
             appTableauDeBord2.toFront();
         }
     }

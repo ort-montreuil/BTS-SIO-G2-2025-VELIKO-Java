@@ -2,7 +2,10 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -87,10 +90,10 @@
                      <children>
                         <TableView fx:id="tvUtilisateurs" layoutX="11.0" layoutY="14.0" prefHeight="258.0" prefWidth="498.0">
                           <columns>
-                            <TableColumn fx:id="tcNom" prefWidth="102.5" text="Nom" />
-                            <TableColumn fx:id="tcPrenom" prefWidth="97.0" text="Prénom" />
-                              <TableColumn fx:id="tcEmail" prefWidth="185.5" style="-::15;" text="Email" />
-                              <TableColumn fx:id="tcStatut" prefWidth="111.20001831054685" text="Statut" />
+                            <TableColumn fx:id="tcNom" prefWidth="102.5" style="-fx-alignment: center;" text="Nom" />
+                            <TableColumn fx:id="tcPrenom" prefWidth="97.0" style="-fx-alignment: center;" text="Prénom" />
+                              <TableColumn fx:id="tcEmail" prefWidth="185.5" style="-fx-alignment: center;" text="Email" />
+                              <TableColumn fx:id="tcStatut" prefWidth="111.20001831054685" style="-fx-alignment: center;" text="Statut" />
                           </columns>
                         </TableView>
                         <Button fx:id="btnSupprimer" layoutX="391.0" layoutY="290.0" mnemonicParsing="false" onMouseClicked="#deleteClicked" style="-fx-background-radius: 15;" text="Supprimer">
@@ -112,7 +115,7 @@
                         <WebView fx:id="wvVeliko" layoutX="-0.8" prefHeight="390.0" prefWidth="523.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane fx:id="appTableauDeBord1" prefHeight="389.0" prefWidth="512.0" style="-fx-background-color: white;">
+                  <AnchorPane fx:id="appTableauDeBord1" prefHeight="389.0" prefWidth="518.0" style="-fx-background-color: white;">
                   <children>
                      <!-- Indicateurs clés -->
                      <HBox alignment="CENTER" layoutY="49.0" prefHeight="80.0" prefWidth="520.0" spacing="20">
@@ -137,13 +140,13 @@
                            <!-- Tableau des stations -->
                      <TableView fx:id="tvStations" layoutX="10.0" layoutY="209.0" prefHeight="163.0" prefWidth="500.0">
                         <columns>
-                           <TableColumn fx:id="tcStation" prefWidth="177.0" text="Station" />
-                           <TableColumn fx:id="tcVelosDispo" prefWidth="112.0" text="Vélos Dispo" />
-                           <TableColumn fx:id="tcBornesLibres" prefWidth="100.0" text="Bornes Libres" />
-                           <TableColumn fx:id="tcUtilisation" prefWidth="110.0" text="Utilisation (%)" />
+                           <TableColumn fx:id="tcStation" prefWidth="167.5" style="-fx-alignment: center;" text="Station" />
+                           <TableColumn fx:id="tcEmplacement" prefWidth="99.0" style="-fx-alignment: center;" text="Emplacements" />
+                           <TableColumn fx:id="tcNombreVelos" prefWidth="108.0" style="-fx-alignment: center;" text="Nombre de Vélos" />
+                           <TableColumn fx:id="tcTauxRemplissage" prefWidth="124.5" style="-fx-alignment: center;" text="Taux de remplissage " />
                         </columns>
                      </TableView>
-                        <HBox alignment="CENTER" layoutY="129.0" prefHeight="80.0" prefWidth="520.0" spacing="20">
+                        <HBox alignment="CENTER" layoutX="5.0" layoutY="125.0" prefHeight="80.0" prefWidth="520.0" spacing="20">
                            <children>
                            <VBox alignment="CENTER" spacing="5">
                               <Label text="Total Vélos" />
@@ -168,8 +171,8 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button fx:id="btnRetourStat" layoutX="14.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#btnRetourStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&lt;&lt;" textFill="WHITE" />
-                        <Button fx:id="btnSuivantStat" layoutX="446.0" layoutY="13.0" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
+                        <Button fx:id="btnRetourStat" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnRetourStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&lt;&lt;" textFill="WHITE" />
+                        <Button fx:id="btnSuivantStat" layoutX="445.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
                   </children>
                   </AnchorPane>
                   <AnchorPane fx:id="appTableauDeBord2" prefHeight="386.0" prefWidth="519.0" style="-fx-background-color: white;">
@@ -181,10 +184,13 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <PieChart fx:id="pcReservationStationDepart" layoutX="26.0" layoutY="107.0" prefHeight="228.0" prefWidth="241.0" title="Station avec le plus de départs" titleSide="BOTTOM" />
+                        <PieChart fx:id="pcReservationStationDepart" layoutX="26.0" layoutY="107.0" prefHeight="228.0" prefWidth="241.0" title="Station avec le plus de départs" titleSide="BOTTOM">
+                           <cursor>
+                              <Cursor fx:constant="CROSSHAIR" />
+                           </cursor></PieChart>
                         <PieChart fx:id="pcReservationStationArrive" layoutX="273.0" layoutY="101.0" prefHeight="234.0" prefWidth="246.0" title="Stations ayant le plus d'arrivées" titleSide="BOTTOM">
                            <cursor>
-                              <Cursor fx:constant="DEFAULT" />
+                              <Cursor fx:constant="CROSSHAIR" />
                            </cursor>
                         </PieChart>
                         <Label layoutX="146.0" layoutY="76.0" text="Top 10 des stations les plus utilisées">
@@ -203,7 +209,18 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                        <ScatterChart layoutX="77.0" layoutY="50.0" prefHeight="329.0" prefWidth="393.0">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </ScatterChart>
                      </children>
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
                   </AnchorPane>
                </children>
             </AnchorPane>

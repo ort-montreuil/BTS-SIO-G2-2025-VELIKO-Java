@@ -24,7 +24,7 @@ public class StationRepository {
         ResultSet rs = ps.executeQuery();
 
         while (rs.next()){
-            Station station = new Station(rs.getString(1),rs.getString(2),rs.getString(3),rs.getDouble(4),rs.getDouble(5),rs.getInt(6),rs.getInt(7),rs.getDate(8));
+            Station station = new Station(rs.getString(1),rs.getString(2),rs.getInt(3),rs.getDouble(4),rs.getDouble(5),rs.getInt(6),rs.getInt(7),rs.getDate(8));
             stations.add(station);
         }
         return stations;

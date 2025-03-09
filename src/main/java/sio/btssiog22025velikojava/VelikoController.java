@@ -19,7 +19,6 @@ import sio.btssiog22025velikojava.controllers.UserController;
 import sio.btssiog22025velikojava.models.Station;
 import sio.btssiog22025velikojava.models.User;
 import sio.btssiog22025velikojava.tools.DataSourceProvider;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -223,6 +222,7 @@ public class VelikoController implements Initializable {
         } else if (actionEvent.getSource() == menuGestionParc) {
             appGestionParc.toFront();
         } else if (actionEvent.getSource() == menuTableauDeBord) {
+            appTableauDeBord1.setVisible(true);
             appTableauDeBord1.toFront();
         }
     }

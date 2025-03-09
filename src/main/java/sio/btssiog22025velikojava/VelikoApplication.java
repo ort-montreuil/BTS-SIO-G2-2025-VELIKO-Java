@@ -12,6 +12,7 @@ public class VelikoApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(VelikoApplication.class.getResource("connexion.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
+        stage.setTitle("Veliko");
         stage.setScene(scene);
         stage.show();
     }

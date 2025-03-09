@@ -3,6 +3,9 @@ package sio.btssiog22025velikojava.services;
 import sio.btssiog22025velikojava.repositories.StatRepository;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class StatService {
@@ -42,6 +45,18 @@ public class StatService {
 
     public Map<String, Integer> getReservationsByStationArrive() throws SQLException {
         return statRepository.getReservationsByStationArrive();
+    }
+    public Integer countUsers() throws SQLException {
+        return statRepository.countUsers();
+    }
+    public String getUserwithMostFavorite() throws SQLException {
+        return statRepository.getUserWithMostFavorite();
+    }
+    public String getUserwithMostReservation() throws SQLException {
+        return statRepository.getUserWithMostReservation();
+    }
+    public ArrayList<Map<String,Object>> getTopUserCities() throws SQLException {
+        return statRepository.getTopUserCities();
     }
 
 }

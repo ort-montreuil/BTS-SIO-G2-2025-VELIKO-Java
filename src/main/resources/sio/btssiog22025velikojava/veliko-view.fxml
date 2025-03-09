@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.chart.ScatterChart?>
@@ -216,6 +218,50 @@
                              <NumberAxis fx:id="yAxis" autoRanging="true" label="Réservations" upperBound="200.0" />
                           </yAxis>
                         </ScatterChart>
+                     </children>
+                     <cursor>
+                        <Cursor fx:constant="CROSSHAIR" />
+                     </cursor>
+                  </AnchorPane>
+                  <AnchorPane fx:id="appTableauDeBord4" prefHeight="386.0" prefWidth="531.0" style="-fx-background-color: white;" visible="false">
+                     <children>
+                        <Button fx:id="btnSuivantStat4" layoutX="445.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnSuivantStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&gt;&gt;" textFill="WHITE" />
+                        <Button fx:id="btnRetourStat4" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onMouseClicked="#btnRetourStatClicked" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px 20px; -fx-background-radius: 30px;" text="&lt;&lt;" textFill="WHITE" />
+                        <Label layoutX="196.0" layoutY="20.0" text="Page Statistique N°4">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" layoutX="2.0" layoutY="50.0" prefHeight="80.0" prefWidth="530.0" spacing="20">
+                           <children>
+                              <VBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <Label text="Utilisateur avec le plus de favoris" />
+                                    <Label fx:id="lblUserMaxFavori" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="N/A" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <Label text="Total Utilisateur" />
+                                    <Label fx:id="lblTotalUser" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="0" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="5">
+                                 <children>
+                                    <Label text="Utilisateur avec le plus de réservations" />
+                                    <Label fx:id="lblUserMaxReservation" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="N/A" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <BarChart fx:id="bcTopUserCity" layoutX="25.0" layoutY="130.0" prefHeight="234.0" prefWidth="482.0" title="Top 10 des villes avec le plus d'utilisateurs">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
                      </children>
                      <cursor>
                         <Cursor fx:constant="CROSSHAIR" />

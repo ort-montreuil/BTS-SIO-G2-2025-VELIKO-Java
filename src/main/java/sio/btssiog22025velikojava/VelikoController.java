@@ -6,10 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.PieChart;
-import javafx.scene.chart.ScatterChart;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -118,6 +115,20 @@ public class VelikoController implements Initializable {
     private NumberAxis xAxis;
     @FXML
     private NumberAxis yAxis;
+    @FXML
+    private Button btnSuivantStat4;
+    @FXML
+    private Button btnRetourStat4;
+    @FXML
+    private Label lblTotalUser;
+    @FXML
+    private Label lblUserMaxFavori;
+    @FXML
+    private Label lblUserMaxReservation;
+    @FXML
+    private AnchorPane appTableauDeBord4;
+    @FXML
+    private BarChart<String,Number> bcTopUserCity;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -188,6 +199,11 @@ public class VelikoController implements Initializable {
 
             loadTableStation();
             loadScatterChart();
+
+            lblTotalUser.setText(String.valueOf(statController.countUsers()));
+            lblUserMaxFavori.setText(statController.getUserwithMostFavorite());
+            lblUserMaxReservation.setText(statController.getUserwithMostReservation());
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -309,17 +325,25 @@ public class VelikoController implements Initializable {
             loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
             appTableauDeBord2.toFront();
 
-        } else if (appTableauDeBord2.isVisible()) {
+        }
+        else if (appTableauDeBord2.isVisible()) {
             appTableauDeBord2.setVisible(false);
             appTableauDeBord3.setVisible(true);
             appTableauDeBord3.toFront();
 
             loadScatterChart();
-
-        } else if (appTableauDeBord3.isVisible()) {
+        }
+        else if (appTableauDeBord3.isVisible()) {
             appTableauDeBord3.setVisible(false);
+            appTableauDeBord4.setVisible(true);
+            appTableauDeBord4.toFront();
+            loadTopUserCitiesData();
+        }
+        else if (appTableauDeBord4.isVisible()) {
+            appTableauDeBord4.setVisible(false);
             appTableauDeBord1.setVisible(true);
             appTableauDeBord1.toFront();
+
         }
     }
 
@@ -339,12 +363,17 @@ public class VelikoController implements Initializable {
             loadPieChartData(pcReservationStationArrive, statController.getReservationsByStationArrive());
             appTableauDeBord2.toFront();
         }
-        else if (appTableauDeBord1.isVisible()) {
-            appTableauDeBord1.setVisible(false);
+        else if (appTableauDeBord4.isVisible()){
+            appTableauDeBord4.setVisible(false);
             appTableauDeBord3.setVisible(true);
             appTableauDeBord3.toFront();
-
             loadScatterChart();
+        }
+        else if (appTableauDeBord1.isVisible()) {
+            appTableauDeBord1.setVisible(false);
+            appTableauDeBord4.setVisible(true);
+            appTableauDeBord4.toFront();
+            loadTopUserCitiesData();
         }
     }
 
@@ -446,6 +475,25 @@ public class VelikoController implements Initializable {
         }
 
     }
+    private void loadTopUserCitiesData() {
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.setName("Utilisateurs par ville");
 
+        try {
+            ArrayList<Map<String, Object>> topCities = statController.getTopUserCities();
+
+            for (Map<String, Object> cityData : topCities) {
+                String city = (String) cityData.get("city"); // Ville
+                int users = (int) cityData.get("users"); // Nombre d'utilisateurs
+
+                series.getData().add(new XYChart.Data<>(city, users));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        bcTopUserCity.getData().clear(); // Nettoie les anciennes données
+        bcTopUserCity.getData().add(series); // Ajoute les nouvelles données
+    }
 
 }

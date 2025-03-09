@@ -40,7 +40,6 @@ public class ReservationRepository {
         ArrayList<Map<String, Object>> data = new ArrayList<>();
 
         try {
-            // La requête SQL pour regrouper par mois et type de vélo, et compter les réservations
             String query = "SELECT EXTRACT(MONTH FROM reservation.date_reservation) AS month, reservation.type_velo, COUNT(*) AS reservations_count " +
                     "FROM reservation " +
                     "GROUP BY month, reservation.type_velo " +

@@ -35,3 +35,10 @@ Ajoutez le fichier .jar aux dépendances du projet :
 - Ajouter une nouvelle application
 
 - Sélectionner en tant que main class "VelikoApplication"
+
+### Etape 5 : Connexion Admin
+
+- User :
+```admin@mail.dev``` 
+- Password :
+```admin```

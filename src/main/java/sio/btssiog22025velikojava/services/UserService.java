@@ -3,6 +3,7 @@ package sio.btssiog22025velikojava.services;
 import sio.btssiog22025velikojava.models.User;
 import sio.btssiog22025velikojava.repositories.UserRepository;
 
+import javax.swing.text.StyledEditorKit;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -51,4 +52,18 @@ public class UserService
     {
         userRepository.editBooleanAdValidation(email);
     }
+    public void editBooleanAdValidationTrue(String email)throws SQLException
+    {
+        userRepository.editBooleanAdValidationTrue(email);
+    }
+    public ArrayList<User> getUsersWithAdValidationFalse() throws SQLException
+    {
+        return userRepository.getUsersWithAdValidationFalse();
+    }
+    public Boolean getBooleanAdValidation(String email) throws SQLException
+    {
+        return userRepository.getBooleanAdValidation(email);
+    }
+
+
 }

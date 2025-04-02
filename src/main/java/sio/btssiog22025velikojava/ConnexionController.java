@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sio.btssiog22025velikojava.controllers.UserController;
 import sio.btssiog22025velikojava.tools.DataSourceProvider;
@@ -34,6 +35,18 @@ public class ConnexionController implements Initializable {
     private PasswordField txtMotDePasse;
     @FXML
     private Button btnMDPO;
+    @FXML
+    private AnchorPane appMMDP;
+    @FXML
+    private TextField txtEmail1;
+    @FXML
+    private Label lblMotDePasse11;
+    @FXML
+    private TextField txtEmail11;
+    @FXML
+    private Label lblMotDePasse2;
+    @FXML
+    private Label lblMotDePasse1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -96,8 +109,22 @@ public class ConnexionController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Champs requis manquants");
+            alert.showAndWait();
             return;
         }
         userController.editBooleanAdValidation(txtEmail.getText());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Demande tranmise");
+        alert.showAndWait();
+
+        // verification de l'etat de la validation
+        // si true renvoyer vers la page changement connexion
+
+        if (userController.getBooleanAdValidation(txtEmail.getText())){
+            appMMDP.setVisible(true);
+            appMMDP.toFront();
+        }
+
     }
 }

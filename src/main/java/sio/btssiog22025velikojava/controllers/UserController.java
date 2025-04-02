@@ -53,4 +53,17 @@ public class UserController
     {
         userService.editBooleanAdValidation(email);
     }
+    public void editBooleanAdValidationTrue(String email)throws SQLException
+    {
+        userService.editBooleanAdValidationTrue(email);
+    }
+    public ArrayList<User> getUsersWithAdValidationFalse() throws SQLException
+    {
+        return userService.getUsersWithAdValidationFalse();
+    }
+    public Boolean getBooleanAdValidation(String email) throws SQLException
+    {
+        return userService.getBooleanAdValidation(email);
+    }
+
 }

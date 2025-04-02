@@ -152,4 +152,44 @@ public class UserRepository
         ps.executeUpdate();
         ps.close();
     }
+    public void editBooleanAdValidationTrue(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("UPDATE `user` SET ad_validation = 1 WHERE email = ?");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+    }
+
+    public ArrayList<User> getUsersWithAdValidationFalse() throws SQLException
+    {
+        ArrayList<User> users = new ArrayList<>();
+        PreparedStatement ps = this.connection.prepareStatement(
+                "SELECT name, first_name, email, statut FROM `user` WHERE ad_validation = 0 AND roles = '[\"ROLE_ADMIN\"]'"
+        );
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next())
+        {
+            User user = new User(
+                    rs.getString("name"),
+                    rs.getString("first_name"),
+                    rs.getString("email"),
+                    rs.getBoolean("statut")
+            );
+            users.add(user);
+        }
+
+        rs.close();
+        ps.close();
+
+        return users;
+    }
+    public Boolean getBooleanAdValidation(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("SELECT `ad_validation` From user WHERE email = ?");
+        ps.setString(1, email);
+
+        ResultSet rs = ps.executeQuery();
+        return rs.next();
+    }
 }

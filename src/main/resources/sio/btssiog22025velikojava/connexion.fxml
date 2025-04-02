@@ -45,5 +45,27 @@
             </AnchorPane>
          </center>
       </BorderPane>
+      <AnchorPane fx:id="appMMDP" prefHeight="486.0" prefWidth="768.0" style="-fx-background-color: linear-gradient(to right, #91d97d, #ccfcff);" visible="false">
+         <children>
+            <TextField fx:id="txtEmail1" layoutX="226.0" layoutY="149.0" prefHeight="30.0" prefWidth="202.0" style="-fx-background-radius: 15;" />
+            <Label fx:id="lblMotDePasse1" layoutX="36.0" layoutY="149.0" prefHeight="20.0" prefWidth="158.0" text="Nouveau mot de passe :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblMotDePasse2" layoutX="36.0" layoutY="200.0" prefHeight="20.0" prefWidth="184.0" text="Confirmation Mot de passe :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtEmail11" layoutX="226.0" layoutY="195.0" prefHeight="30.0" prefWidth="202.0" style="-fx-background-radius: 15;" />
+            <Button layoutX="301.0" layoutY="271.0" mnemonicParsing="false" text="Valider" />
+            <Label fx:id="lblMotDePasse11" layoutX="251.0" layoutY="64.0" prefHeight="20.0" prefWidth="202.0" text="Modification mot de passe :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>

@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.ConnexionController">
+<AnchorPane prefHeight="486.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sio.btssiog22025velikojava.ConnexionController">
    <children>
       <BorderPane layoutX="-2.0" prefHeight="486.0" prefWidth="770.0">
          <top>
@@ -37,8 +37,10 @@
                      </font>
                   </Label>
                   <TextField fx:id="txtEmail" layoutX="289.0" layoutY="65.0" prefHeight="30.0" prefWidth="202.0" style="-fx-background-radius: 15;" />
-                  <Button fx:id="btnValider" layoutX="340.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#btnValiderClicked" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="Valider" />
+                  <Button fx:id="btnValider" layoutX="247.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#btnValiderClicked" prefHeight="26.0" prefWidth="99.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="Valider" />
                   <PasswordField fx:id="txtMotDePasse" layoutX="289.0" layoutY="136.0" prefHeight="30.0" prefWidth="202.0" style="-fx-background-radius: 15;" />
+                  <Label layoutX="187.0" layoutY="257.0" prefHeight="17.0" prefWidth="406.0" text="Contactez le support en cas de problème de connexion +335 04 34 34 45" />
+                  <Button fx:id="btnMDPO" layoutX="385.0" layoutY="212.0" mnemonicParsing="false" onMouseClicked="#btnMDPO" prefHeight="26.0" prefWidth="174.0" style="-fx-background-color: white; -fx-background-radius: 15;" text="mot de passe oublié" />
                </children>
             </AnchorPane>
          </center>

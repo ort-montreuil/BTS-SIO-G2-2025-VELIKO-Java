@@ -47,4 +47,8 @@ public class UserService
     {
         userRepository.unForceUser(email);
     }
+    public void editBooleanAdValidation(String email)throws SQLException
+    {
+        userRepository.editBooleanAdValidation(email);
+    }
 }

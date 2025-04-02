@@ -49,4 +49,8 @@ public class UserController
     {
         userService.unForceUser(email);
     }
+    public void editBooleanAdValidation(String email)throws SQLException
+    {
+        userService.editBooleanAdValidation(email);
+    }
 }

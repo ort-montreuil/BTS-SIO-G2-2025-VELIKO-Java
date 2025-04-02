@@ -128,6 +128,18 @@ public class VelikoController implements Initializable {
     private AnchorPane appTableauDeBord4;
     @FXML
     private BarChart<String,Number> bcTopUserCity;
+    @FXML
+    private AnchorPane apSupport;
+    @FXML
+    private TableColumn tcAdminEmail;
+    @FXML
+    private TableColumn tcAdminName;
+    @FXML
+    private TableView tvAdmin;
+    @FXML
+    private Button btnValidationDemandeAdmin;
+    @FXML
+    private Button menuSupport;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -224,6 +236,11 @@ public class VelikoController implements Initializable {
         } else if (actionEvent.getSource() == menuTableauDeBord) {
             appTableauDeBord1.setVisible(true);
             appTableauDeBord1.toFront();
+        }
+        else if (actionEvent.getSource() == menuSupport)
+        {
+            apSupport.setVisible(true);
+            apSupport.toFront();
         }
     }
     // convert list of stations to json

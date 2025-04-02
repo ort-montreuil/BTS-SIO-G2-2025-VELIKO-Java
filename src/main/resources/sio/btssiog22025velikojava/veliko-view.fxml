@@ -65,10 +65,22 @@
                            </image></ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="menuTableauDeBord" mnemonicParsing="false" onAction="#menuClicked" prefHeight="74.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #d0f4cc, #f0ffff);;" text="Tableau de bord">
+                  <Button fx:id="menuTableauDeBord" mnemonicParsing="false" onAction="#menuClicked" prefHeight="64.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #d0f4cc, #f0ffff);;" text="Tableau de bord">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Times New Roman" size="16.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="36.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Images/pngtree-dashboard-line-icon-vector-png-image_6626604.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="menuSupport" mnemonicParsing="false" onAction="#menuClicked" prefHeight="62.0" prefWidth="242.0" style="-fx-background-color: linear-gradient(to right, #d0f4cc, #f0ffff);;" text="Support">
                      <font>
                         <Font name="Times New Roman" size="16.0" />
                      </font>
@@ -266,6 +278,17 @@
                      <cursor>
                         <Cursor fx:constant="CROSSHAIR" />
                      </cursor>
+                  </AnchorPane>
+                  <AnchorPane fx:id="apSupport" prefHeight="387.0" prefWidth="533.0" style="-fx-background-color: white;">
+                     <children>
+                        <TableView fx:id="tvAdmin" layoutX="24.0" layoutY="25.0" prefHeight="261.0" prefWidth="469.0">
+                          <columns>
+                            <TableColumn fx:id="tcAdminEmail" prefWidth="296.0" text="Email" />
+                            <TableColumn fx:id="tcAdminName" prefWidth="172.0" text="Name" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnValidationDemandeAdmin" layoutX="106.0" layoutY="311.0" mnemonicParsing="false" text="Validation" />
+                     </children>
                   </AnchorPane>
                </children>
             </AnchorPane>

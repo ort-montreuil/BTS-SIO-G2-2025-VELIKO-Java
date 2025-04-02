@@ -1,5 +1,6 @@
 package sio.btssiog22025velikojava;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,6 +32,8 @@ public class ConnexionController implements Initializable {
     private Button btnValider;
     @FXML
     private PasswordField txtMotDePasse;
+    @FXML
+    private Button btnMDPO;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -84,5 +87,17 @@ public class ConnexionController implements Initializable {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @FXML
+    public void btnMDPO(javafx.scene.input.MouseEvent mouseEvent) throws SQLException {
+
+        if (txtEmail.getText() == null || txtEmail.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Champs requis manquants");
+            return;
+        }
+        userController.editBooleanAdValidation(txtEmail.getText());
     }
 }

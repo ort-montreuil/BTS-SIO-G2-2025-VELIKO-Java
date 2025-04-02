@@ -144,4 +144,12 @@ public class UserRepository
         ps.executeUpdate();
         ps.close();
     }
+
+    public void editBooleanAdValidation(String email) throws SQLException
+    {
+        PreparedStatement ps = connection.prepareStatement("UPDATE `user` SET ad_validation = 0 WHERE email = ?");
+        ps.setString(1, email);
+        ps.executeUpdate();
+        ps.close();
+    }
 }
